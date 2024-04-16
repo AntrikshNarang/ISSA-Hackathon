@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const connectToMongo = require('db.js');
 
 dotenv.config();
 
@@ -16,4 +17,5 @@ app.use('/notes', require('./routes/notes.js'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://${HOST}:${PORT}`);
+    connectToMongo();
 })
