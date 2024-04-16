@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-const Note = () => {
+const Note = ({title, description, tag}) => {
     const {id} = useParams();
     const [info,setInfo] = useState({
         "title": "Brush Width Adjustment",

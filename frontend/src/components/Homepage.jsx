@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react/dist";
+import { useToast } from "@chakra-ui/react";
+import axios from "axios"
 /*
   This example requires some changes to your config:
   
@@ -23,7 +24,8 @@ export default function Homepage() {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const handleLogIn = async () => {
+  const handleLogIn = async (event) => {
+    event.preventDefault();
     if (!email || !password) {
       toast({
         title: "Please Fill All the Fields!",
@@ -42,7 +44,7 @@ export default function Homepage() {
         },
       };
       const { data } = await axios.post(
-        `/auth/login`,
+        `http://localhost:3000/auth/login/`,
         { email, password },
         config
       );
@@ -55,7 +57,7 @@ export default function Homepage() {
         position: "bottom",
       });
 
-      localStorage.setItem("userToken", JSON.stringify(data));
+      localStorage.setItem("userToken", data.token);
       navigate("/notes");
     } catch (error) {
       console.log("Error Occurred!", error);
@@ -70,8 +72,9 @@ export default function Homepage() {
     }
   };
 
-  const handleSignUp = async () => {
-    setLoading(true);
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+    // setLoading(true);
     if (!name || !email || !password) {
       toast({
         title: "Please Fill All the Fields!",
@@ -90,10 +93,12 @@ export default function Homepage() {
         },
       };
       const { data } = await axios.post(
-        `/auth/signUp/`,
+        `http://localhost:3000/auth/signUp/`,
         { name, email, password },
         config
       );
+
+      console.log(data);
 
       toast({
         title: "Registration Successful!",
@@ -103,7 +108,7 @@ export default function Homepage() {
         position: "bottom",
       });
 
-      localStorage.setItem("userToken", JSON.stringify(data));
+      localStorage.setItem("userToken", data.token);
       navigate("/notes");
     } catch (error) {
       console.log("Error Occurred!", error);
@@ -154,7 +159,7 @@ export default function Homepage() {
                     name="name"
                     type="name"
                     autoComplete="current-password"
-                    onChange={() => setName(name)}
+                    onChange={(e) => setName(e.target.value)}
                     required
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -174,7 +179,7 @@ export default function Homepage() {
                     type="email"
                     autoComplete="email"
                     required
-                    onChange={() => setEmail(email)}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -204,7 +209,7 @@ export default function Homepage() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    onChange={() => setPassword(password)}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -214,8 +219,8 @@ export default function Homepage() {
                 {signup ? (
                   <button
                     type="submit"
-                    onClick={() => {
-                      handleSignUp;
+                    onClick={(e) => {
+                      handleSignUp(e);
                     }}
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
@@ -224,8 +229,8 @@ export default function Homepage() {
                 ) : (
                   <button
                     type="submit"
-                    onClick={() => {
-                      handleLogIn;
+                    onClick={(e) => {
+                      handleLogIn(e);
                     }}
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
