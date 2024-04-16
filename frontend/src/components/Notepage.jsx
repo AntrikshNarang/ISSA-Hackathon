@@ -47,6 +47,8 @@ const Notepage = () => {
     }
   }
   return (
+    <>
+
     <div className='mx-[7%] flex flex-wrap justify-evenly'>
         {
             notes.map((note)=>{
@@ -54,6 +56,7 @@ const Notepage = () => {
             })
         }
     </div>
+    </>
   )
 }
 
