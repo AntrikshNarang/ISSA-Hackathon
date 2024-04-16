@@ -27,7 +27,7 @@ router.post('/login',
             if(user) {
                 const passwordCompare = await bcrypt.compare(password, user.password);
                 if(passwordCompare) {
-                    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+                    const token = jwt.sign({id: user._id}, JWT_SECRET_STRING);
                     res.status(200).json({token});
                 } else {
                     res.status(400).json({error: 'Invalid Credentials'});
