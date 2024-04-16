@@ -71,7 +71,7 @@ router.post('/newNote', fetchuser,
 router.delete('/deleteNote/:id', fetchuser,
     async (req, res) => {
         try {
-            const note = await findById(req.params.id);
+            const note = await Note.findById(req.params.id);
             if(!note) {
                 return res.status(404).json({ error: `Note not found!` });
             }
@@ -100,7 +100,7 @@ router.put('/updateNote/:id', fetchuser,
         }
 
         try {
-            const note = await findById(req.params.id);
+            const note = await Note.findById(req.params.id);
             if(!note) {
                 return res.status(404).json({ error: `Note not found!` });
             }
@@ -112,6 +112,7 @@ router.put('/updateNote/:id', fetchuser,
             await Note.updateOne({ _id: req.params.id }, req.body);
             res.status(200).json({ message: `Note updated successfully!` });
         } catch(err) {
+            console.log(err);
             res.status(500).json({ error: `Internal Server Error!` });
         }      
     }
