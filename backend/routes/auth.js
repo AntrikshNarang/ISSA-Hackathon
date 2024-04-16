@@ -13,8 +13,32 @@ router.post('/login',
         body('password', 'Enter a valid Password').isLength({ min: 8 }),
     ], 
     async (req, res) => {
-       
-    }
+        try{
+            const errors = validationResult(req);
+            if(!errors.isEmpty) {
+                return res.status(400).json({error: errors.array()[0].msg});
+            }
+            const {email, password} = req.body;
+            const user = await User.findOne({email});
+            if(user) {
+                const passwordCompare = await bcrypt.compare(password, user.password);
+                if(passwordCompare) {
+                    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+                    res.status(200).json({token});
+                } else {
+                    res.status(400).json({error: 'Invalid Credentials'});
+                }
+            } else {
+                res.status(400).json({error: 'Invalid Credentials'});
+            }
+
+            const token = jwt.sign({id: user._id, name: user.name}, process.env.JWT_SECRET);
+            res.status(200).json({token});
+
+        } catch(error) {
+            res.status(500).json({error: 'Internal Server Error'});
+        }
+    } 
 );
 
 router.post('/signUp', 
@@ -24,7 +48,28 @@ router.post('/signUp',
         body('password', 'Enter a valid Password').isLength({ min: 8 }),
     ], 
     async (req, res) => {
-        
+        try{
+            const errors = validationResult(req);
+            if(!errors.isEmpty) {
+                return res.status(400).json({error: errors.array()[0].msg});
+            }
+            const {name, email, password} = req.body;
+            const user = await User.findOne({email});
+            if(user) {
+                return res.status(400).json({error: 'User already exists with this Email'});
+            }
+            const salt = await bcrypt.genSalt(10);
+            const securePassword = await bcrypt.hash(password, salt);
+            const newUser = await User.create({
+                name,
+                email,
+                password: securePassword,
+            });
+            const token = jwt.sign({id: newUser._id, name}, process.env.JWT_SECRET);
+            res.status(200).json({token});
+        } catch(error) {
+            res.status(500).json({error: 'Internal Server Error'});
+        }
     }
 );
 
