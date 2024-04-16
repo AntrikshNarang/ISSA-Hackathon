@@ -18,6 +18,25 @@ router.get('/getNotes', fetchuser, async (req, res) => {
     }
 );
 
+router.get('/getNote/:id', fetchuser,
+    async (req, res) => {
+        try {
+            const note = await findById(req.params.id);
+            if(!note) {
+                return res.status(404).json({ error: `Note not found!` });
+            }
+
+            if(note.user != req.user.id) {
+                return res.status(401).json({ error: `Not authorized!` });
+            }
+
+            res.status(200).json(note);
+        } catch(err) {
+            res.status(500).json({ error: `Internal Server Error!` });
+        }
+    }
+);
+
 router.post('/newNote', fetchuser,  
     [
         body('title', 'Enter a Title').notEmpty(),
