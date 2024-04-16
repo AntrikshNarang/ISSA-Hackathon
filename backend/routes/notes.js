@@ -124,4 +124,15 @@ router.put('/updateNote/:id', fetchuser,
     }
 );
 
+router.get('/searchNotes/:query', fetchuser, 
+    async (req, res) => {
+        try {
+            const notes = await Note.find({user: req.user.id, $text: { $search: req.params.query }});
+            res.status(200).json(notes);
+        } catch(err) {
+            res.status(500).json({ error: `Internal Server Error!` });
+        }
+    }
+);
+
 module.exports = router;
