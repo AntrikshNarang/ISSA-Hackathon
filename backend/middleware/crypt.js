@@ -1,9 +1,9 @@
 const crypto = require('crypto');
+require("dotenv").config()
 
-const algorithm = 'aes-256-cbc';
-const key = crypto.randomBytes(32);
-const iv = crypto.randomBytes(16);
-
+const algorithm = process.env.CRYPT_ALGORITHM;
+const key = Buffer.from(process.env.CRYPT_KEY, "hex");
+const iv = Buffer.from(process.env.CRYPT_IV, "hex");
 
 const encryptText = (text) => {
     const cipher = crypto.createCipheriv(algorithm, key, iv);
