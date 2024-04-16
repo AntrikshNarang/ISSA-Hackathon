@@ -21,7 +21,7 @@ router.get('/getNotes', fetchuser, async (req, res) => {
 router.get('/getNote/:id', fetchuser,
     async (req, res) => {
         try {
-            const note = await findById(req.params.id);
+            const note = await Note.findById(req.params.id);
             if(!note) {
                 return res.status(404).json({ error: `Note not found!` });
             }

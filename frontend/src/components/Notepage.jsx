@@ -4,8 +4,7 @@ import Card from './Card'
 
 const Notepage = () => {
   return (
-    <div>
-        <>hii</>
+    <div className='mx-[7%] flex flex-wrap justify-evenly'>
         {
             data.map((x)=>{
                 return  <Card note={x}/>
