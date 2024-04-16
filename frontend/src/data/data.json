@@ -1,0 +1,52 @@
+[
+    {
+        "title": "notes",
+        "description": "State Management: The component manages several state variables using the useState hook. These variables include isDrawing to track whether drawing is in progress, prevMouseX and prevMouseY to store the previous mouse position, snapshot to store a snapshot of the canvas, and selectedTool, brushWidth, and selectedColor to manage the selected drawing tool, brush width, and color, respectively.",
+        "tag": "notes"
+    },
+    {
+        "title": "Event Handlers",
+        "description": "The component defines event handler functions to respond to user interactions. These handlers include handleToolChange to update the selected drawing tool, handleBrushWidthChange to update the brush width, handleColorChange to update the selected color, handleClearCanvas to clear the canvas, and handleSaveImage to save the canvas as an image file.",
+        "tag": "notes"
+    },
+    {
+        "title": "Drawing Logic",
+        "description": "The component implements the startDraw and drawing functions to handle drawing operations on the canvas. startDraw is called when the user starts drawing, and it initializes the drawing process by setting the isDrawing flag and capturing the initial mouse position. The drawing function is called when the user moves the mouse while drawing, and it draws lines on the canvas based on the mouse movement.",
+        "tag": "notes"
+    },
+    {
+        "title": "Canvas Initialization",
+        "description": "The useEffect hook is used to initialize the canvas upon component mount. It sets the canvas width and height to match its container and performs any additional initialization logic if needed. This ensures that the canvas is ready for drawing.",
+        "tag": "notes"
+    },
+    {
+        "title": "Tool Selection",
+        "description": "The component allows users to select different drawing tools, such as brush, rectangle, circle, or triangle. Each tool option is rendered as a list item with an associated icon and label. Clicking on a tool updates the selectedTool state variable.",
+        "tag": "notes"
+    },
+    {
+        "title": "Brush Width Adjustment",
+        "description": "Users can adjust the brush width using a range input element. The component tracks changes to the brush width and updates the brushWidth state variable accordingly. This allows users to control the thickness of the brush strokes.",
+        "tag": "notes"
+    },
+    {
+        "title": "Color Selection",
+        "description": "The component provides various color options for users to choose from. Users can either select from predefined colors or use a color picker input to choose a custom color. The selected color is stored in the selectedColor state variable.",
+        "tag": "notes"
+    },
+    {
+        "title": "Canvas Clearing",
+        "description": "Users can clear the canvas using the 'Clear Canvas' button. Clicking this button triggers the handleClearCanvas function, which clears the canvas by filling it with a transparent color. This allows users to start drawing on a blank canvas.",
+        "tag": "notes"
+    },
+    {
+        "title": "Image Saving",
+        "description": "The 'Save As Image' button enables users to save the canvas drawing as an image file. When clicked, the handleSaveImage function generates a download link for the canvas image and triggers a click event on the link, prompting the user to save the image to their device.",
+        "tag": "notes"
+    },
+    {
+        "title": "Component Structure",
+        "description": "The Canvas component is structured into sections representing different aspects of the drawing interface. These sections include tools-board for drawing tools, options-board for brush width adjustment, colors-board for color selection, buttons for canvas actions, and drawing-board for the canvas itself.",
+        "tag": "notes"
+    }
+]
