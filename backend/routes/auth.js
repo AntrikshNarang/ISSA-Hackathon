@@ -15,7 +15,7 @@ router.post('/login',
     async (req, res) => {
         try{
             const errors = validationResult(req);
-            if(!errors.isEmpty) {
+            if(!errors.isEmpty()) {
                 return res.status(400).json({error: errors.array()[0].msg});
             }
             const {email, password} = req.body;
@@ -50,7 +50,7 @@ router.post('/signUp',
     async (req, res) => {
         try{
             const errors = validationResult(req);
-            if(!errors.isEmpty) {
+            if(!errors.isEmpty()) {
                 return res.status(400).json({error: errors.array()[0].msg});
             }
             const {name, email, password} = req.body;
