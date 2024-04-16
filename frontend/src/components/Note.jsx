@@ -11,15 +11,19 @@ const Note = () => {
         // noteCall();
     },[]);
     const noteCall =async ()=>{
-        const res = await axios.post('/getnote/',id);
+        const res = await axios.post(`getnote/${id}`);
         console.log(res);
         setTitle(res?.data?.title);
         setContent(res?.data?.content);
         setTag(res?.data?.tag);
     }
     const doChanges = async()=>{
-        const res = await axios.post('/notes/updateNote/',id);
-        
+        const res = await axios.post(`notes/updatenote/${id}`,{
+            title:title,
+            description:content,
+            tag:tag
+        });
+
     }
 
   return (
