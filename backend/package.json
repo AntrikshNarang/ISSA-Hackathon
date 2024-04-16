@@ -5,6 +5,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.1"
   },
   "scripts": {
@@ -14,7 +15,6 @@
   "version": "1.0.0",
   "description": "A notes app",
   "main": "server.js",
-  "devDependencies": {},
   "author": "",
   "license": "ISC"
 }
