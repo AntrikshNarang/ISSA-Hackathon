@@ -30,7 +30,6 @@ const Note = () => {
             description:content,
             tag:tag
         });
-
     }
 
   return (
