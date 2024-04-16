@@ -2,6 +2,10 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {body, validationResult} = require('express-validator');
+const dotenv = require('dotenv');
+
+dotenv.config();
+const JWT_SECRET_STRING = process.env.JWT_SECRET_STRING;
 
 const fetchuser = require('../middleware/fetchuser.js');
 
@@ -32,10 +36,11 @@ router.post('/login',
                 res.status(400).json({error: 'Invalid Credentials'});
             }
 
-            const token = jwt.sign({id: user._id, name: user.name}, process.env.JWT_SECRET);
+            const token = jwt.sign({id: user._id, name: user.name}, JWT_SECRET_STRING);
             res.status(200).json({token});
 
         } catch(error) {
+            console.log(error);
             res.status(500).json({error: 'Internal Server Error'});
         }
     } 
@@ -65,7 +70,7 @@ router.post('/signUp',
                 email,
                 password: securePassword,
             });
-            const token = jwt.sign({id: newUser._id, name}, process.env.JWT_SECRET);
+            const token = jwt.sign({id: newUser._id, name}, JWT_SECRET_STRING);
             res.status(200).json({token});
         } catch(error) {
             res.status(500).json({error: 'Internal Server Error'});
