@@ -8,9 +8,16 @@ import CreateNote from './components/CreateNote';
 
 const App = () => {
   const location = useLocation();
+<<<<<<< HEAD
   return (
     <div>
       {location.pathname !== '/' && <Navbar />}
+=======
+
+  return (
+    <div>
+      {location.pathname!=="/" && <Navbar />}
+>>>>>>> 61efbdd9a8e248aefd45e1f390fb3cdaf36cda2c
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/notes" element={<Outlet />}>
