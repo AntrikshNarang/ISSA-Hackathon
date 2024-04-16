@@ -4,12 +4,16 @@ const jwt = require('jsonwebtoken');
 const {body, validationResult} = require('express-validator');
 
 const fetchuser = require('../middleware/fetchuser.js');
+const {encryptText, decryptText} = require('../middleware/crypt.js');
 
 const Note = require('../models/note.js');
 
 router.get('/getNotes', fetchuser, async (req, res) => {
         try {
             const notes = await Note.find({ user: req.user.id });
+            for(let i = 0; i < notes.length; i++) {
+                notes[i].description = decryptText(notes[i].description);
+            }
             res.status(200).json(notes);
         } catch(err) {
             console.log(err)
@@ -29,7 +33,8 @@ router.get('/getNote/:id', fetchuser,
             if(note.user != req.user.id) {
                 return res.status(401).json({ error: `Not authorized!` });
             }
-
+            
+            note.description = decryptText(note.description);
             res.status(200).json(note);
         } catch(err) {
             res.status(500).json({ error: `Internal Server Error!` });
@@ -51,7 +56,7 @@ router.post('/newNote', fetchuser,
         try {
             const the_new_note = {
                 title: req.body.title,
-                description: req.body.description,
+                description: encryptText(req.body.description),
                 user: req.user.id
             }
 
@@ -109,6 +114,7 @@ router.put('/updateNote/:id', fetchuser,
                 return res.status(401).json({ error: `Not authorized!` });
             }
 
+            req.body.description = encryptText(req.body.description);
             await Note.updateOne({ _id: req.params.id }, req.body);
             res.status(200).json({ message: `Note updated successfully!` });
         } catch(err) {
