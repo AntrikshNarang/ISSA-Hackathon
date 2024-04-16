@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react/dist";
+import { useToast } from "@chakra-ui/react";
 /*
   This example requires some changes to your config:
   
@@ -71,7 +71,6 @@ export default function Homepage() {
   };
 
   const handleSignUp = async () => {
-    setLoading(true);
     if (!name || !email || !password) {
       toast({
         title: "Please Fill All the Fields!",
