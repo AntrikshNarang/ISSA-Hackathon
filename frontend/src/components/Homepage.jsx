@@ -102,7 +102,7 @@ export default function Homepage() {
         },
       };
       const { data } = await axios.post(
-        `/auth/signUp/`,
+        `http://localhost:3000/auth/signUp/`,
         { name, email, password },
         config
       );
