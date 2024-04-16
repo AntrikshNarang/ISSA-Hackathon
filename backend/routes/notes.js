@@ -25,6 +25,7 @@ router.get('/getNotes', fetchuser, async (req, res) => {
 router.get('/getNote/:id', fetchuser,
     async (req, res) => {
         try {
+            console.log('first');
             const note = await Note.findById(req.params.id);
             if(!note) {
                 return res.status(404).json({ error: `Note not found!` });
@@ -33,6 +34,7 @@ router.get('/getNote/:id', fetchuser,
             if(note.user != req.user.id) {
                 return res.status(401).json({ error: `Not authorized!` });
             }
+            console.log(note)
             
             note.description = decryptText(note.description);
             res.status(200).json(note);
