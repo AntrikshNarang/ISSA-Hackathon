@@ -85,7 +85,16 @@ export default function Homepage() {
       });
       return;
     }
-
+    if(password.length  < 8){
+      toast({
+        title: "Password should be atleast contain 8 chars!",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+      return;
+    }
     try {
       const config = {
         headers: {
