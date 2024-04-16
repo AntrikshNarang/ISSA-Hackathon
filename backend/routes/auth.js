@@ -27,18 +27,14 @@ router.post('/login',
             if(user) {
                 const passwordCompare = await bcrypt.compare(password, user.password);
                 if(passwordCompare) {
-                    const token = jwt.sign({id: user._id}, JWT_SECRET_STRING);
-                    res.status(200).json({token});
+                    const token = jwt.sign({id: user._id, name: user.name}, JWT_SECRET_STRING);
+                    return res.status(200).json({token});
                 } else {
-                    res.status(400).json({error: 'Invalid Credentials'});
+                    return res.status(400).json({error: 'Invalid Credentials'});
                 }
             } else {
-                res.status(400).json({error: 'Invalid Credentials'});
+                return res.status(400).json({error: 'Invalid Credentials'});
             }
-
-            const token = jwt.sign({id: user._id, name: user.name}, JWT_SECRET_STRING);
-            res.status(200).json({token});
-
         } catch(error) {
             console.log(error);
             res.status(500).json({error: 'Internal Server Error'});
@@ -71,9 +67,9 @@ router.post('/signUp',
                 password: securePassword,
             });
             const token = jwt.sign({id: newUser._id, name}, JWT_SECRET_STRING);
-            res.status(200).json({token});
+            return res.status(200).json({token});
         } catch(error) {
-            res.status(500).json({error: 'Internal Server Error'});
+            return res.status(500).json({error: 'Internal Server Error'});
         }
     }
 );
