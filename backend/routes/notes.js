@@ -7,12 +7,12 @@ const fetchuser = require('../middleware/fetchuser.js');
 
 const Note = require('../models/note.js');
 
-router.get('/getNotes', fetchuser,
-    async (req, res) => {
+router.get('/getNotes', fetchuser, async (req, res) => {
         try {
             const notes = await Note.find({ user: req.user.id });
             res.status(200).json(notes);
         } catch(err) {
+            console.log(err)
             res.status(500).json({ error: `Internal Server Error!` });
         }
     }
@@ -20,8 +20,8 @@ router.get('/getNotes', fetchuser,
 
 router.post('/newNote', fetchuser,  
     [
-        body('title', 'Enter a Title').isEmpty(),
-        body('description', 'Enter a Description').isEmpty(),
+        body('title', 'Enter a Title').notEmpty(),
+        body('description', 'Enter a Description').notEmpty(),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -71,8 +71,8 @@ router.delete('/deleteNote/:id', fetchuser,
 
 router.put('/updateNote/:id', fetchuser,
     [
-        body('title', 'Enter a Title').isEmpty(),
-        body('description', 'Enter a Description').isEmpty(),
+        body('title', 'Enter a Title').notEmpty(),
+        body('description', 'Enter a Description').notEmpty(),
     ],
     async (req, res) => {
         const errors = validationResult(req);
