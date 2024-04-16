@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {body, validationResult} = require('express-validator');
 
-const fetchUser = require('../middleware/fetchUser.js');
+const fetchuser = require('../middleware/fetchuser.js');
 
 const Note = require('../models/note.js');
 
-router.get('/getNotes', fetchUser,
+router.get('/getNotes', fetchuser,
     async (req, res) => {
         try {
             const notes = await Note.find({ user: req.user.id });
@@ -18,7 +18,7 @@ router.get('/getNotes', fetchUser,
     }
 );
 
-router.post('/newNote', fetchUser,  
+router.post('/newNote', fetchuser,  
     [
         body('title', 'Enter a Title').isEmpty(),
         body('description', 'Enter a Description').isEmpty(),
@@ -49,7 +49,7 @@ router.post('/newNote', fetchUser,
     }
 );
 
-router.delete('/deleteNote/:id', fetchUser,
+router.delete('/deleteNote/:id', fetchuser,
     async (req, res) => {
         try {
             const note = await findById(req.params.id);
@@ -69,7 +69,7 @@ router.delete('/deleteNote/:id', fetchUser,
     }
 );
 
-router.put('/updateNote/:id', fetchUser,
+router.put('/updateNote/:id', fetchuser,
     [
         body('title', 'Enter a Title').isEmpty(),
         body('description', 'Enter a Description').isEmpty(),

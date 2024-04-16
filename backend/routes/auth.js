@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {body, validationResult} = require('express-validator');
 
-const fetchUser = require('../middleware/fetchUser.js');
+const fetchuser = require('../middleware/fetchuser.js');
 
 const User = require('../models/user.js');
 
@@ -73,7 +73,7 @@ router.post('/signUp',
     }
 );
 
-router.get('/getUser', fetchUser, async (req, res) => {
+router.get('/getUser', fetchuser, async (req, res) => {
     res.status(200).json({ name: req.user.name });
 });
 
